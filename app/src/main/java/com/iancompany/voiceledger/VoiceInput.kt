@@ -22,7 +22,7 @@ internal class VoiceInput(
     private val result: (String) -> Unit,
     private val sourceFactory: () -> Source = { Microphone(context) },
     private val decoderFactory: () -> Decoder = {
-        if (BuildConfig.DEBUG && BuildConfig.LOCAL_ONLINE_VOICE) OnlineTranscriber() else {
+        if (BuildConfig.ONLINE_VOICE) OnlineTranscriber() else {
             val engine = OfflineTranscriber(context.assets)
             object : Decoder {
                 override fun decode(samples: FloatArray, cancelled: () -> Boolean) = if (cancelled()) "" else engine.transcribe(samples)
@@ -109,7 +109,7 @@ internal class VoiceInput(
                 }
             } catch (_: Exception) {
                 post { main.removeCallbacks(timeout); abandonFocus(); update(State.IDLE,
-                    if (BuildConfig.LOCAL_ONLINE_VOICE) R.string.voice_online_failed else R.string.voice_failed) }
+                    if (BuildConfig.ONLINE_VOICE) R.string.voice_online_failed else R.string.voice_failed) }
             } catch (_: LinkageError) {
                 post { main.removeCallbacks(timeout); abandonFocus(); update(State.IDLE, R.string.voice_failed) }
             }

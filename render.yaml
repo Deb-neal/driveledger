@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: driveledger-voice
+    runtime: python
+    plan: 0.5c-512mb
+    region: singapore
+    branch: main
+    autoDeployTrigger: "off"
+    buildCommand: pip install -r server/requirements.txt
+    startCommand: gunicorn --config server/gunicorn.conf.py 'server.app:create_app()'
+    healthCheckPath: /health
+    numInstances: 1
+    disk:
+      name: voice-usage
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.6
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: VOICE_RELAY_TOKEN
+        sync: false
+      - key: VOICE_USAGE_DB
+        value: /var/data/voice-usage.sqlite3
+      - key: VOICE_TOTAL_LIMIT
+        value: "1000"
+      - key: VOICE_DAILY_LIMIT
+        value: "200"
+      - key: VOICE_MINUTE_LIMIT
+        value: "10"

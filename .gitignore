@@ -22,3 +22,6 @@ docs/submission-checklist-2026-11-15.md
 docs/submission-application-content-2026-11-11.md
 app/libs/*.aar
 app/src/main/assets/asr/
+
+voice-release.properties
+.venv/

@@ -7,6 +7,21 @@ val releaseSigning = Properties().apply {
     if (releaseSigningFile.exists()) releaseSigningFile.inputStream().use { load(it) }
 }
 
+// This token limits access to the relay; it is extractable from a public APK.
+// The OpenAI provider key must never be supplied to the Android build.
+val voiceConfigFile = rootProject.file("voice-release.properties")
+val voiceConfig = Properties().apply {
+    if (voiceConfigFile.exists()) voiceConfigFile.inputStream().use { load(it) }
+}
+val voiceEndpoint = voiceConfig.getProperty("endpoint", "")
+val voiceToken = voiceConfig.getProperty("relayToken", "")
+if (voiceConfigFile.exists()) {
+    require(voiceEndpoint.matches(Regex("https://[a-z0-9][a-z0-9.-]+/transcribe"))) {
+        "Voice endpoint must be an HTTPS host with /transcribe and no credentials, query or port"
+    }
+    require(voiceToken.matches(Regex("[a-f0-9]{64}"))) { "Relay token must be 64 lowercase hex characters" }
+}
+
 android {
     buildFeatures { buildConfig = true }
     if (releaseSigningFile.exists()) {
@@ -24,10 +39,17 @@ android {
         getByName("debug") {
             val online = providers.gradleProperty("localOnlineVoice").orNull == "true"
             buildConfigField("boolean", "LOCAL_ONLINE_VOICE", online.toString())
+            buildConfigField("boolean", "ONLINE_VOICE", (online || voiceConfigFile.exists()).toString())
+            buildConfigField("String", "VOICE_ENDPOINT", "\"${if (online) "http://127.0.0.1:18765/transcribe" else voiceEndpoint}\"")
+            buildConfigField("String", "VOICE_TOKEN", "\"${if (online) "" else voiceToken}\"")
             if (online) versionNameSuffix = "-online-test"
+            else if (voiceConfigFile.exists()) versionNameSuffix = "-cloud-test"
         }
         getByName("release") {
             buildConfigField("boolean", "LOCAL_ONLINE_VOICE", "false")
+            buildConfigField("boolean", "ONLINE_VOICE", voiceConfigFile.exists().toString())
+            buildConfigField("String", "VOICE_ENDPOINT", "\"$voiceEndpoint\"")
+            buildConfigField("String", "VOICE_TOKEN", "\"$voiceToken\"")
             if (releaseSigningFile.exists()) signingConfig = signingConfigs.getByName("submission")
         }
     }

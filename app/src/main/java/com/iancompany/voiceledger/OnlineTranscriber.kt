@@ -5,24 +5,30 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.io.IOException
 
-/** shortcut: debug-only loopback relay through adb reverse; deploy HTTPS before submitting online APKs. */
+/** HTTPS relay in cloud builds; loopback HTTP is restricted to explicit debug builds. */
 internal class OnlineTranscriber : VoiceInput.Decoder {
     @Volatile private var connection: HttpURLConnection? = null
 
     override fun decode(samples: FloatArray, cancelled: () -> Boolean): String {
-        check(BuildConfig.DEBUG && BuildConfig.LOCAL_ONLINE_VOICE)
+        check(BuildConfig.ONLINE_VOICE)
+        VoiceEndpoint.validate(BuildConfig.VOICE_ENDPOINT, BuildConfig.VOICE_TOKEN,
+            BuildConfig.DEBUG && BuildConfig.LOCAL_ONLINE_VOICE)
         val wav = PcmAudio.wav(samples)
-        val current = URL("http://127.0.0.1:18765/transcribe").openConnection() as HttpURLConnection
+        val current = URL(BuildConfig.VOICE_ENDPOINT).openConnection() as HttpURLConnection
         connection = current
         try {
             if (cancelled()) return ""
             current.requestMethod = "POST"
-            current.connectTimeout = 3000
+            current.connectTimeout = 5000
             current.readTimeout = 15000
             current.instanceFollowRedirects = false
             current.doOutput = true
             current.setRequestProperty("Content-Type", "audio/wav")
-            current.setRequestProperty("X-DriveLedger-Local", "1")
+            if (BuildConfig.DEBUG && BuildConfig.LOCAL_ONLINE_VOICE) {
+                current.setRequestProperty("X-DriveLedger-Local", "1")
+            } else {
+                current.setRequestProperty("Authorization", "Bearer " + BuildConfig.VOICE_TOKEN)
+            }
             current.setFixedLengthStreamingMode(wav.size)
             if (cancelled()) return ""
             current.outputStream.use { if (!cancelled()) it.write(wav) }

@@ -336,7 +336,8 @@ class MainActivity : Activity() {
             val source = column(body, if (body.orientation == LinearLayout.HORIZONTAL) 1f else 0f)
             source.setPadding(0, 0, if (body.orientation == LinearLayout.HORIZONTAL) dp(Gap.XL) else 0, dp(Gap.M))
             label(source, getString(R.string.voice_title), TextRole.SectionTitle)
-            if (BuildConfig.LOCAL_ONLINE_VOICE) label(source, getString(R.string.voice_online_notice),
+            if (BuildConfig.ONLINE_VOICE) label(source, getString(
+                if (BuildConfig.LOCAL_ONLINE_VOICE) R.string.voice_local_notice else R.string.voice_online_notice),
                 TextRole.Body, secondary = true, top = Gap.S)
             button(source, R.string.voice_start, R.id.voice_start, tone = ActionTone.Primary, full = true) { requestVoice() }
             voiceStatusView = label(source, getString(voiceMessage), TextRole.Body, secondary = true, top = Gap.M).apply {
@@ -638,8 +639,9 @@ class MainActivity : Activity() {
         if (busy || !canEdit() || draft?.editing != false) return
         if (voice.state == VoiceInput.State.RECORDING) { voice.finishRecording(); return }
         if (voice.busy) return
-        if (BuildConfig.LOCAL_ONLINE_VOICE && !onlineVoiceAccepted) {
-            showConfirmation(R.string.voice_online_title, R.string.voice_online_consent,
+        if (BuildConfig.ONLINE_VOICE && !onlineVoiceAccepted) {
+            showConfirmation(R.string.voice_online_title,
+                if (BuildConfig.LOCAL_ONLINE_VOICE) R.string.voice_local_consent else R.string.voice_online_consent,
                 R.string.voice_online_accept, R.string.cancel) {
                 onlineVoiceAccepted = true
                 requestVoice()
@@ -680,7 +682,7 @@ class MainActivity : Activity() {
         findViewById<View>(R.id.entries)?.let { enableTree(it, allowed) }
         findViewById<Button>(R.id.voice_start)?.apply {
             setText(if (voice.state == VoiceInput.State.RECORDING) R.string.voice_finish
-                else if (BuildConfig.LOCAL_ONLINE_VOICE) R.string.voice_online_start else R.string.voice_start)
+                else if (BuildConfig.ONLINE_VOICE) R.string.voice_online_start else R.string.voice_start)
             isEnabled = allowed && (!voice.busy || voice.state == VoiceInput.State.RECORDING)
         }
         findViewById<View>(R.id.voice_cancel)?.apply {

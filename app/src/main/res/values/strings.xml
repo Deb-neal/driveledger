@@ -72,10 +72,12 @@
     <string name="voice_start">마이크로 입력</string>
     <string name="voice_online_start">온라인으로 말하기</string>
     <string name="voice_online_title">온라인 음성 입력</string>
-    <string name="voice_online_notice">OpenAI 온라인 테스트 · Mac 서버 연결 필요</string>
-    <string name="voice_online_consent">버튼을 눌러 녹음한 최대 8초 음성을 Mac을 거쳐 OpenAI로 전송해 문장으로 바꿔요. 앱과 Mac에는 녹음 파일을 저장하지 않아요. 취소해도 이미 전송된 요청은 되돌릴 수 없어요. 금액과 항목을 확인한 뒤 직접 저장해 주세요.</string>
+    <string name="voice_local_notice">OpenAI 온라인 테스트 · Mac 서버 연결 필요</string>
+    <string name="voice_local_consent">버튼을 눌러 녹음한 최대 8초 음성을 Mac을 거쳐 OpenAI로 전송해 문장으로 바꿔요. 앱과 Mac에는 녹음 파일을 저장하지 않아요. 취소해도 이미 전송된 요청은 되돌릴 수 없어요. 금액과 항목을 확인한 뒤 직접 저장해 주세요.</string>
+    <string name="voice_online_notice">온라인 음성 입력 · 인터넷 연결 필요</string>
+    <string name="voice_online_consent">최대 8초 동안 녹음한 음성을 Render 중계 서버를 거쳐 OpenAI로 전송해 문장으로 바꿔요. 앱과 중계 서버는 음성 파일·인식문을 저장하지 않으며, 외부 서비스에는 해당 서비스의 데이터 처리 정책이 적용돼요. 취소해도 이미 전송된 요청은 되돌릴 수 없어요. 금액과 항목을 확인한 뒤 직접 저장해 주세요.</string>
     <string name="voice_online_accept">동의하고 말하기</string>
-    <string name="voice_online_failed">온라인 연결 또는 인식에 실패했어요. Mac 서버·인터넷을 확인하거나 직접 입력해 주세요.</string>
+    <string name="voice_online_failed">온라인 연결 또는 인식에 실패했어요. 인터넷 연결을 확인하거나 직접 입력해 주세요.</string>
     <string name="voice_finish">말하기 끝내기</string>
     <string name="voice_cancel">음성 입력 취소</string>
     <string name="voice_hint">예: “오늘 주차비 삼천 원”</string>

@@ -28,7 +28,7 @@ class OnlineVoiceTest {
 
     @Test fun syntheticVoiceUsesOnlineEngineAndRequiresConfirmation() {
         val args = InstrumentationRegistry.getArguments()
-        assumeTrue(args.getString("liveOnline") == "true" && BuildConfig.LOCAL_ONLINE_VOICE)
+        assumeTrue(args.getString("liveOnline") == "true" && BuildConfig.ONLINE_VOICE)
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val context = instrumentation.targetContext
         val initial = ExpenseStore(context).use { it.month(YearMonth.now()) }

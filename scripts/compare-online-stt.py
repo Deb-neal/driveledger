@@ -99,7 +99,8 @@ def main():
         return
     key = load_key()
     opener = urllib.request.build_opener(NoRedirect())
-    output = ROOT / "scripts/fixtures" / ("online-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + ".json")
+    output = ROOT / "artifacts/phase3/asr-diagnostic" / ("online-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + ".json")
+    output.parent.mkdir(parents=True, exist_ok=True)
     results = []
     for item, data, duration in clips:
         started = time.monotonic()
