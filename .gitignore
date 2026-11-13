@@ -8,6 +8,8 @@ local.properties
 __pycache__/
 *.jks
 *.keystore
+.signing/
+release-signing.properties
 .env
 .env.*
 !.env.example

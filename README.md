@@ -82,6 +82,21 @@ Pleos STT/TTS는 사용자 계정에서 Coming Soon으로 확인했습니다. �
 
 **2026-11-13 소스 공개 준비:** 이 저장소는 개발 중인 소스 공개본입니다. 서명 release APK·시연 영상·독립 음성 서버는 아직 준비 중이며, 저장소 게시만으로 공모전 접수 완료를 의미하지 않습니다.
 
+### release 서명 준비
+
+루트의 `release-signing.properties`가 있으면 release 빌드에 별도 서명키를 사용합니다. 이 파일과 `.signing/`은 Git에서 제외합니다. 본인 키를 사용하는 개발 환경에서 아래 항목을 설정합니다(예시 값은 실제 비밀번호가 아닙니다).
+
+```properties
+storeFile=.signing/driveledger-release.jks
+keyAlias=driveledger
+storePassword=YOUR_LOCAL_PASSWORD
+keyPassword=YOUR_LOCAL_PASSWORD
+```
+
+`./gradlew :app:assembleRelease`로 빌드합니다. 서명 설정이 없으면 unsigned APK가 생성되므로 제출할 수 없습니다. 서명키와 설정은 별도 안전한 위치에 보관해야 이후 같은 앱을 업데이트할 수 있습니다. APK·저장소에 포함하지 않습니다.
+
+현재 release의 온라인 모드는 아직 연결 전입니다. **서명 성공만으로 제출 준비가 끝난 것은 아니며**, 독립 음성 서버 연결 및 해당 APK의 실제 설치·핵심 동작 검증 후 최종본을 배포합니다.
+
 현재 APK는 `0.3.0-phase3-online-test`, 약 144MB의 개발용 debug APK이며 제출용 release가 아닙니다. 모델이 포함되어 GitHub 일반 파일 업로드 한도를 넘으므로 최종본도 용량에 따라 GitHub Releases를 사용합니다. 최종 산출물은 `apk/팀명_앱이름_release.apk` 또는 GitHub Releases에 배치할 예정입니다.
 
 - [Phase 1 검증 결과와 남은 제약](docs/phase-1-validation.md)

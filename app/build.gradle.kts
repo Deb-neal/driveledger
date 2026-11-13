@@ -1,14 +1,35 @@
+import java.util.Properties
+
 plugins { id("com.android.application") }
+
+val releaseSigningFile = rootProject.file("release-signing.properties")
+val releaseSigning = Properties().apply {
+    if (releaseSigningFile.exists()) releaseSigningFile.inputStream().use { load(it) }
+}
 
 android {
     buildFeatures { buildConfig = true }
+    if (releaseSigningFile.exists()) {
+        signingConfigs.create("submission") {
+            fun required(name: String): String = requireNotNull(releaseSigning.getProperty(name)?.takeIf { it.isNotBlank() }) {
+                "Missing $name in release-signing.properties"
+            }
+            storeFile = rootProject.file(required("storeFile"))
+            storePassword = required("storePassword")
+            keyAlias = required("keyAlias")
+            keyPassword = required("keyPassword")
+        }
+    }
     buildTypes {
         getByName("debug") {
             val online = providers.gradleProperty("localOnlineVoice").orNull == "true"
             buildConfigField("boolean", "LOCAL_ONLINE_VOICE", online.toString())
             if (online) versionNameSuffix = "-online-test"
         }
-        getByName("release") { buildConfigField("boolean", "LOCAL_ONLINE_VOICE", "false") }
+        getByName("release") {
+            buildConfigField("boolean", "LOCAL_ONLINE_VOICE", "false")
+            if (releaseSigningFile.exists()) signingConfig = signingConfigs.getByName("submission")
+        }
     }
     namespace = "com.iancompany.voiceledger"
     compileSdk { version = release(36) { minorApiLevel = 1 } }
