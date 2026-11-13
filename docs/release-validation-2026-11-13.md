@@ -1,6 +1,18 @@
 # Release 서명 준비 확인 — 2026-11-13
 
-상태: **서명 빌드만 확인한 내부 후보. 제출·설치 검증 완료 아님.** 아래 해시/크기는 당일 최초 서명 후보의 기록이며 이후 재빌드된 파일의 식별자가 아니다.
+상태: **HTTPS 연결 release의 설치·합성 온라인 UI·기록 흐름 검증 완료. 공개 게시·실제 마이크 재시험·제출은 미완료.**
+
+## 최신 HTTPS 후보
+
+- APK: `app/build/outputs/apk/release/app-release.apk`, 138,322,308바이트.
+- SHA-256: `b91a93bd9fb7958a14df65b3d7eb6b6fe2a64b6813c38b613497677b86e173eb`.
+- 동일한 release 인증서 서명 검증 성공, debuggable 미설정. 현재 OpenAI 키와 서명 비밀번호가 APK 내부에 없음을 확인.
+- 버전 `0.3.0-phase3`, versionCode 1, minSdk28/targetSdk34. 운영 HTTPS 주소와 relay 토큰만 연결.
+- 별도 Pleos AVD에 설치/실행 성공. release 대상으로 온라인 합성 검사 1개와 기록 흐름 검사 1개 통과. [상세 검증](cloud-relay-validation-2026-11-13.md).
+
+## 최초 오프라인 후보의 과거 기록
+
+아래 해시/크기와 남은 검증은 최초 후보 당시 기록이며 최신 후보는 위 절을 따른다.
 
 - `:app:assembleRelease` 성공. 별도 RSA 3072 서명키 사용.
 - apksigner 검증 성공, v2 서명, 인증서 CN=DriveLedger.

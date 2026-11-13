@@ -59,7 +59,7 @@ adb shell am start --user current -n com.iancompany.voiceledger/.MainActivity
 
 서버는 `127.0.0.1`에만 열며 한 번에 한 요청, 프로세스당 최대 40회입니다. 제한 도달 시 실패 안내가 나옵니다. Mac 서버 종료/에뮬레이터 재시작 후에는 서버와 `adb reverse`를 다시 확인합니다. 기기/에뮬레이터의 루프백→Mac 구간만 개발용 HTTP이며 OpenAI 구간은 HTTPS입니다. LAN이나 인터넷에 이 개발 서버를 공개하지 않습니다.
 
-**이 Mac 구성은 제출용 서버가 아닙니다.** release에는 로컬 온라인 모드가 비활성화됩니다. 제출용 서버 코드·인증·사용량 상한과 HTTPS 빌드 경로는 준비했으며 실제 Render 배포와 최종 APK 설치 검증은 남아 있습니다. [서버 배포·앱 연결 안내](server/README.md). [비교와 검증 기록](docs/online-stt-evaluation-2026-11-10.md).
+**이 Mac 구성은 제출용 서버가 아닙니다.** release에는 로컬 온라인 모드가 비활성화됩니다. 11/13 Render 배포 및 HTTPS release 설치·합성 온라인 UI 검사를 완료했습니다. 실제 마이크 재시험과 최종 APK 공개 게시는 남아 있습니다. [클라우드 검증](docs/cloud-relay-validation-2026-11-13.md). [서버 배포·앱 연결 안내](server/README.md). [비교와 검증 기록](docs/online-stt-evaluation-2026-11-10.md).
 
 로컬 서버 검사: `python3 -m unittest discover -s scripts -p 'test_*.py'`. `OnlineVoiceTest`는 `-e liveOnline true`를 명시할 때만 합성 음성 한 건으로 실제 API를 호출합니다. 일반 `VoiceInputTest`는 온라인 빌드에서도 오프라인/가짜 디코더로 회귀 검사하며 유료 API를 호출하지 않습니다.
 
@@ -80,7 +80,7 @@ Pleos STT/TTS는 사용자 계정에서 Coming Soon으로 확인했습니다. �
 
 ## 제출물
 
-**2026-11-13 소스 공개 준비:** 이 저장소는 개발 중인 소스 공개본입니다. 서명 release APK·시연 영상·독립 음성 서버는 아직 준비 중이며, 저장소 게시만으로 공모전 접수 완료를 의미하지 않습니다.
+**2026-11-13 제출 준비:** 소스 공개 및 독립 음성 서버 배포를 완료했습니다. HTTPS 서명 release 후보는 별도 Pleos 환경에서 설치·합성 인식·기록 흐름 검사를 통과했으며, APK 공개 게시·시연 영상·공모전 접수는 아직 미완료입니다.
 
 ### release 서명 준비
 
@@ -95,9 +95,9 @@ keyPassword=YOUR_LOCAL_PASSWORD
 
 `./gradlew :app:assembleRelease`로 빌드합니다. 서명 설정이 없으면 unsigned APK가 생성되므로 제출할 수 없습니다. 서명키와 설정은 별도 안전한 위치에 보관해야 이후 같은 앱을 업데이트할 수 있습니다. APK·저장소에 포함하지 않습니다.
 
-현재 HTTPS 온라인 빌드 경로는 구현했고, 실제 운영 주소·토큰 설정은 배포 후 연결합니다. **서명 성공만으로 제출 준비가 끝난 것은 아니며**, 독립 음성 서버 연결 및 해당 APK의 실제 설치·핵심 동작 검증 후 최종본을 배포합니다.
+운영 HTTPS 주소와 relay 토큰은 로컬 `voice-release.properties`로 연결합니다. 11/13 해당 release 후보의 설치·합성 온라인 UI·기록 흐름 검사까지 완료했습니다. [release 검증 기록](docs/release-validation-2026-11-13.md). 실제 마이크 재시험과 공개 게시 후 다운로드 링크를 추가합니다.
 
-기존 사용자 테스트 APK는 `0.3.0-phase3-online-test`, 약 144MB의 debug APK입니다. 별도 서명한 내부 release 후보도 있으나 실제 서버 연결·설치 미검증으로 제출본이 아닙니다. 모델이 포함되어 GitHub 일반 파일 업로드 한도를 넘으므로 최종본도 용량에 따라 GitHub Releases를 사용합니다. 최종 산출물은 `apk/팀명_앱이름_release.apk` 또는 GitHub Releases에 배치할 예정입니다.
+기존 사용자 테스트 APK는 `0.3.0-phase3-online-test`, 약 144MB의 debug APK입니다. HTTPS를 사용하는 별도 서명 release 후보(138,322,308바이트)는 서버 연결·설치 검증을 마쳤으나 아직 공개하지 않았습니다. 모델이 포함되어 GitHub 일반 파일 업로드 한도를 넘으므로 최종본도 용량에 따라 GitHub Releases를 사용합니다. 최종 산출물은 `apk/팀명_앱이름_release.apk` 또는 GitHub Releases에 배치할 예정입니다.
 
 - [Phase 1 검증 결과와 남은 제약](docs/phase-1-validation.md)
 - [Phase 2 검증 결과](docs/phase-2-validation.md)
