@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="surface">#F5F7FB</color>
+    <color name="surface_container">#FFFFFF</color>
+    <color name="on_surface">#18243B</color>
+    <color name="on_surface_variant">#59667C</color>
+    <color name="primary">#2059D9</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#EAF0FE</color>
+    <color name="outline">#8491A7</color>
+    <color name="error">#B32632</color>
+    <color name="on_error">#FFFFFF</color>
+    <color name="divider">#E6EBF2</color>
+    <color name="field">#F7F9FC</color>
+    <color name="disabled_surface">#E1E5EE</color>
+    <color name="on_disabled">#59647A</color>
+    <color name="chart_fuel">#2864E7</color>
+    <color name="chart_charging">#159979</color>
+    <color name="chart_parking">#8A62D8</color>
+    <color name="chart_toll">#0798B2</color>
+    <color name="chart_maintenance">#E58335</color>
+    <color name="chart_insurance">#D9577E</color>
+    <color name="chart_tax">#526787</color>
+    <color name="chart_other">#8A97AB</color>
+</resources>

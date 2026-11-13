@@ -1,0 +1,22 @@
+.gradle/
+.kotlin/
+**/build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+__pycache__/
+*.jks
+*.keystore
+.env
+.env.*
+!.env.example
+deliverables/
+contest-application-consent.docx
+.agents/
+artifacts/
+# Internal submission administration; contains participant information.
+docs/submission-checklist-2026-11-15.md
+docs/submission-application-content-2026-11-11.md
+app/libs/*.aar
+app/src/main/assets/asr/

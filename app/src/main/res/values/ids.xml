@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="record_expense" type="id" />
+    <item name="sentence" type="id" />
+    <item name="parse_sentence" type="id" />
+    <item name="amount" type="id" />
+    <item name="category" type="id" />
+    <item name="save_expense" type="id" />
+    <item name="cancel_expense" type="id" />
+    <item name="delete_expense" type="id" />
+    <item name="total" type="id" />
+    <item name="status" type="id" />
+    <item name="entries" type="id" />
+    <item name="previous_month" type="id" />
+    <item name="next_month" type="id" />
+    <item name="category_chart" type="id" />
+    <item name="voice_start" type="id" />
+    <item name="voice_cancel" type="id" />
+    <item name="voice_status" type="id" />
+    <item name="voice_settings" type="id" />
+    <item name="vehicle_status" type="id" />
+</resources>

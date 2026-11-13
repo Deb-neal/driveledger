@@ -1,0 +1,30 @@
+[
+  {
+    "id": "fuel30k",
+    "path": "scripts/fixtures/fuel30k.wav",
+    "sha256": "5545d4eb411dec9df6864e85c2b258004c28adb6396a2269483fb16f63a6627c",
+    "expected_amount_won": 30000,
+    "expected_category": "FUEL"
+  },
+  {
+    "id": "fuel3k",
+    "path": "scripts/fixtures/fuel3k.wav",
+    "sha256": "eb80e9dc8549a65cd4b23ec18990619275b6056f682d961431b03ae966e9544d",
+    "expected_amount_won": 3000,
+    "expected_category": "FUEL"
+  },
+  {
+    "id": "fuel70k",
+    "path": "scripts/fixtures/fuel70k.wav",
+    "sha256": "ed433ab0574f209f41d0f8a9c1b438a9ed2e9bd254b615a0818118f4f0eaca13",
+    "expected_amount_won": 70000,
+    "expected_category": "FUEL"
+  },
+  {
+    "id": "parking3k",
+    "path": "scripts/fixtures/parking3k.wav",
+    "sha256": "a9e16e5d00d3b8254740fc15cdef49cea5a6a2b3e05c419572c0d73d167f36de",
+    "expected_amount_won": 3000,
+    "expected_category": "PARKING"
+  }
+]

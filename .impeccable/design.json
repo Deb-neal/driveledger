@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-07T04:19:12.158056+00:00",
+  "title": "차계부 — 밝은 차량 지출 대시보드",
+  "extensions": {
+    "platform": "android-views",
+    "breakpoints": [
+      {
+        "name": "form-two-column",
+        "value": "840dp"
+      },
+      {
+        "name": "dashboard-two-column",
+        "value": "1000dp"
+      },
+      {
+        "name": "spacious",
+        "value": "1200dp"
+      }
+    ],
+    "shadows": [],
+    "motion": [
+      {
+        "name": "native-feedback",
+        "value": "RippleDrawable",
+        "purpose": "터치·포커스 피드백"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "기록 시작",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "네이티브 Button. 아래 HTML은 문서 패널용 표현이며 앱 실행 화면은 에뮬레이터 캡처로 검증한다.",
+      "html": "<button class=\"record\">새 지출 기록하기</button>",
+      "css": ".record { background:#2059D9; color:#fff; border:0; border-radius:16px; padding:12px 24px; min-height:64px; font-family:\"IBM Plex Sans KR\",sans-serif; font-size:20px; font-weight:600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "한눈에 보는 차량 지출",
+    "overview": "사용자가 선택한 Financy 레퍼런스의 밝은 바탕, 파란 강조, 요약·그래프·내역 구성을 차량 화면에 적용한다.",
+    "keyCharacteristics": [
+      "흰 표면과 파란 행동",
+      "실제 월 지출 비중",
+      "같은 역할의 같은 글자·간격"
+    ],
+    "dos": [
+      "전체 월 기록으로 합계와 비중 계산",
+      "기록 버튼과 수정 진입점을 명확히 표시"
+    ],
+    "donts": [
+      "존재하지 않는 금융 지표 생성",
+      "테스트 데이터를 기본 데이터로 포함"
+    ]
+  }
+}
