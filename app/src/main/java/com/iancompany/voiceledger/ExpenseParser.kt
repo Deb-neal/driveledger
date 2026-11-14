@@ -15,6 +15,14 @@ object ExpenseParser {
         ExpenseCategory.TAX to listOf("자동차세"),
     )
 
+    /** Pleos can omit 원; accept only an exact known category plus one numeric amount. */
+    fun parseSpeech(text: String): ParsedExpense {
+        val sentence = text.trim().trimEnd('.', '!', '?', '。')
+        val category = aliases.values.flatten().joinToString("|") { Regex.escape(it) }
+        val unitless = Regex("(?:오늘\\s*)?(?:$category)(?:비용|비)?\\s+[0-9영공일이삼사오육칠팔구십백천만,]+")
+        return parse(if (unitless.matches(sentence)) "${sentence}원" else text)
+    }
+
     fun parse(text: String): ParsedExpense {
         val sentence = text.trim().trimEnd('.', '!', '?', '。')
         val compact = sentence.replace(Regex("\\s+"), "")

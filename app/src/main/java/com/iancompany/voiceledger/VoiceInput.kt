@@ -21,15 +21,7 @@ internal class VoiceInput(
     private val changed: (State, Int) -> Unit,
     private val result: (String) -> Unit,
     private val sourceFactory: () -> Source = { Microphone(context) },
-    private val decoderFactory: () -> Decoder = {
-        if (BuildConfig.ONLINE_VOICE) OnlineTranscriber() else {
-            val engine = OfflineTranscriber(context.assets)
-            object : Decoder {
-                override fun decode(samples: FloatArray, cancelled: () -> Boolean) = if (cancelled()) "" else engine.transcribe(samples)
-                override fun close() = engine.close()
-            }
-        }
-    },
+    private val decoderFactory: () -> Decoder = { PleosTranscriber(context.applicationContext) },
 ) : AutoCloseable {
     internal interface Source : AutoCloseable {
         fun start()
@@ -48,7 +40,7 @@ internal class VoiceInput(
     private val generation = AtomicInteger()
     @Volatile private var finish = false
     private var closed = false
-    @Volatile private var decoder: Decoder? = null // Native release stays on worker; online cancel disconnects the socket.
+    @Volatile private var decoder: Decoder? = null // Cancellation also releases the active SDK session.
     private val audio = context.getSystemService(AudioManager::class.java)
     private var focus: AudioFocusRequest? = null
     private val timeout = Runnable { cancel(R.string.voice_timeout) }

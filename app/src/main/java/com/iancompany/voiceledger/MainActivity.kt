@@ -81,7 +81,7 @@ class MainActivity : Activity() {
         }, result = { text ->
             if (resumed && parkedGate.allowed && draft?.id == voiceDraftId && draft?.editing == false) {
                 sentenceField?.setText(text)
-                parseSentence()
+                parseSentence(fromSpeech = true)
             }
         })
         savedInstanceState?.let { state ->
@@ -336,9 +336,7 @@ class MainActivity : Activity() {
             val source = column(body, if (body.orientation == LinearLayout.HORIZONTAL) 1f else 0f)
             source.setPadding(0, 0, if (body.orientation == LinearLayout.HORIZONTAL) dp(Gap.XL) else 0, dp(Gap.M))
             label(source, getString(R.string.voice_title), TextRole.SectionTitle)
-            if (BuildConfig.ONLINE_VOICE) label(source, getString(
-                if (BuildConfig.LOCAL_ONLINE_VOICE) R.string.voice_local_notice else R.string.voice_online_notice),
-                TextRole.Body, secondary = true, top = Gap.S)
+            label(source, getString(R.string.voice_pleos_notice), TextRole.Caption, secondary = true, top = Gap.S)
             button(source, R.string.voice_start, R.id.voice_start, tone = ActionTone.Primary, full = true) { requestVoice() }
             voiceStatusView = label(source, getString(voiceMessage), TextRole.Body, secondary = true, top = Gap.M).apply {
                 id = R.id.voice_status; accessibilityLiveRegion = View.ACCESSIBILITY_LIVE_REGION_POLITE
@@ -439,11 +437,11 @@ class MainActivity : Activity() {
         refreshControls()
     }
 
-    private fun parseSentence() {
+    private fun parseSentence(fromSpeech: Boolean = false) {
         if (!canEdit() || voice.busy) return
         syncDraft()
         val current = draft ?: return
-        val parsed = ExpenseParser.parse(current.sentence)
+        val parsed = if (fromSpeech) ExpenseParser.parseSpeech(current.sentence) else ExpenseParser.parse(current.sentence)
         amountField?.setText(parsed.amountWon?.toString().orEmpty())
         categoryField?.setSelection(parsed.category?.ordinal?.plus(1) ?: 0)
         syncDraft()

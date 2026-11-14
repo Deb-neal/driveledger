@@ -4,6 +4,17 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class ExpenseParserTest {
+    @Test fun pleosUnitlessSpeechRequiresAnExactCategoryAndSingleAmount() {
+        for (text in listOf("오늘 주차비 3000", "주차 3천", "주차비 3,000")) {
+            val result = ExpenseParser.parseSpeech(text)
+            assertEquals(text, 3000L, result.amountWon)
+            assertEquals(ExpenseCategory.PARKING, result.category)
+        }
+        for (text in listOf("오늘 주요 칠만", "주차 3000 5000", "주차 3~5천", "주차 1.5만", "주차 3000 달러", "어제 주차 3000", "주차 약 3000", "주차 3000원 5000"))
+            assertNull(text, ExpenseParser.parseSpeech(text).amountWon)
+        assertNull(ExpenseParser.parseSpeech("주요 3만원").category)
+    }
+
     @Test fun onlineSyntheticTranscriptsPreserveAmountsAndDoNotGuessMissingCategories() {
         // Actual 2026-11-10 API transcripts; parser regression, not an ASR accuracy test.
         for ((text, amount) in listOf("주 3만 원." to 30000L, "주 삼천 원." to 3000L)) {

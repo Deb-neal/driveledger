@@ -70,6 +70,7 @@
     <string name="share_under_point_one">0.1% 미만</string>
     <string name="voice_title">말로 간편하게 기록해요</string>
     <string name="voice_start">마이크로 입력</string>
+    <string name="voice_pleos_notice">Pleos 음성 인식 · 기기 내 처리</string>
     <string name="voice_online_start">온라인으로 말하기</string>
     <string name="voice_online_title">온라인 음성 입력</string>
     <string name="voice_local_notice">OpenAI 온라인 테스트 · Mac 서버 연결 필요</string>

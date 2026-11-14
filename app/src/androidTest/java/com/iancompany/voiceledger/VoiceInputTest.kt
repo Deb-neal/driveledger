@@ -52,15 +52,8 @@ class VoiceInputTest {
         override fun close() { closed.set(true) }
     }
     private fun installSource(activity: MainActivity, source: Samples): VoiceInput {
-        activity.javaClass.getDeclaredField("onlineVoiceAccepted").apply { isAccessible = true }.setBoolean(activity, true)
         val voice = field(activity, "voice") as VoiceInput
-        voice.javaClass.getDeclaredField("decoderFactory").apply { isAccessible = true }.set(voice, {
-            val engine = OfflineTranscriber(activity.assets)
-            object : VoiceInput.Decoder {
-                override fun decode(samples: FloatArray, cancelled: () -> Boolean) = if (cancelled()) "" else engine.transcribe(samples)
-                override fun close() = engine.close()
-            }
-        })
+        // Keep the product Pleos decoder; lifecycle checks must not load the retired Whisper engine.
         // Only the instrumentation harness replaces hardware input; no exported product test switch.
         voice.javaClass.getDeclaredField("sourceFactory").apply { isAccessible = true }.set(voice, { source })
         return voice
